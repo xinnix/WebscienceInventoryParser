@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>txt2excel</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+	<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+</head>
+<body class="container">
+	<label for="inputfile">Choose File</label>
+	<input id="fileDialog" type="file" />
+	<p class="ialert alert-warning">message tips</p>
+	<button type="submit" class="btn btn-warning">TXT2EXCEL</button>
+	
+	<script type="text/javascript">
+	if (!(window.File || window.FileReader || window.FileList || window.Blob)) {
+   	 	alert('你妈喊你换Chrome浏览器啦');
+	}
+	
+
+	// // got the true path of the file
+	// var chooser = $('#fileDialog');
+	// chooser.change(function(evt) {
+	// 	console.log($(this).val());
+	// 	var filename = $(this).val();
+	// 	// read all lines:
+	// 	lineReader.eachLine(filename, function(line, last) {
+	// 	  console.log(line);
+
+	// 	  if (/* done */last) {
+	// 	    return false; // stop reading
+	// 	  }
+	// 	});
+	// });
+
+// var rf=require("fs");  
+// var data=rf.readFileSync("a.txt","utf-8");  
+// console.log(data);  
+// console.log("READ FILE SYNC END");  
+
+
+// var lineReader = require('line-reader');
+
+
+// // read all lines:
+// lineReader.eachLine('a.txt', function(line, last) {
+//   console.log(line);
+
+//   if (/* done */last) {
+//     return false; // stop reading
+//   }
+// });
+	readfile('a.txt');
+	</script>
+
+</body>
+</html>

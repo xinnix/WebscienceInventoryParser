@@ -1,0 +1,24 @@
+{
+  "name": "gege_parser",
+  "version": "1.0.0",
+  "description": "webscience parser",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xinnix/WebscienceInventoryParser.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xinnix/WebscienceInventoryParser/issues"
+  },
+  "homepage": "https://github.com/xinnix/WebscienceInventoryParser#readme",
+  "dependencies": {
+    "bluebird": "^2.10.2",
+    "excel-export": "^0.4.1",
+    "line-reader": "^0.3.0"
+  }
+}

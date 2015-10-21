@@ -7,9 +7,8 @@ var conf = {};
 var re = new RegExp(/^[1-9]\d*$/g);
 keywords = ['By:','Source:','Research Fields:','Times Cited:'];
 otherkey = ['ESI Hot','Research Front'];
+oneInv = {};
 
-
-  oneInv = {};
 
 var trim = function(str) {
     //return this.replace(/[(^\s+)(\s+$)]/g,"");//會把字符串中間的空白符也去掉
@@ -17,11 +16,32 @@ var trim = function(str) {
     return str.replace(/^\s+/g,"").replace(/\s+$/g,"");
 }
 
+function isEmpty(obj)
+{
+    for (var name in obj)
+    {
+        return false;
+    }
+    return true;
+};
+
 function parserLine(line){
 	line = trim(line);
 	if(line.length!=0){
 		var res = line.match(re);
 		if(res){
+			console.log(oneInv);
+			console.log('hello');
+			if(!isEmpty(oneInv)){
+				
+				var a = [];
+				for (x in oneInv){
+					a.push(oneInv[x]);
+				}
+				conf.rows.push(a);
+				console.log(conf.rows);
+
+			}
 			oneInv['order']=res[0];
 			return;
 		}
@@ -50,27 +70,39 @@ var count = 0;
 function readfile(name){
 	lineReader.eachLine(name, function(line, last) {
 
-		// console.log(line);
+		 console.log(line);
 		// console.log(count++);
   		parserLine(line);
 		// console.log(Object.getOwnPropertyNames(oneInv).length);
-  		if(Object.getOwnPropertyNames(oneInv).length ==  6){
-  			conf.rows .push(oneInv);
-  			console.log(conf.rows);
-  			return
-  		}
+  		
   		
 		
  	 	if (/* done */last) {
+ 	 		if(!isEmpty(oneInv)){
+				
+				var a = [];
+				for (x in oneInv){
+					a.push(oneInv[x]);
+				}
+				conf.rows.push(a);
+				console.log(conf.rows);
+
+			}
+ 	 		var result = nodeExcel.execute(conf);
+
+			var fs=require("fs");  
+			fs.writeFile('./1.xlsx',result,'binary',function(err){
+			if(err) throw err;
+			console.log('complete');
+			});
    		 	return false; // stop reading
   		}
 	});
 }
 
-readfile('a.txt');
+ readfile('a.txt');
 
-
-
+// console.log(isEmpty(oneInv));
 // a = 'Times Cited: 840';
 // parserLine(a);
 
