@@ -1,6 +1,6 @@
 var lineReader = require('line-reader');
 var nodeExcel  = require('excel-export');
-
+var fs=require("fs");  
 
 var conf = {};
 
@@ -24,6 +24,47 @@ function isEmpty(obj)
     }
     return true;
 };
+
+function readLines(input,filename, func) {
+  var remaining = '';
+  input.on('data', function(data) {
+    remaining += data;
+    var index = remaining.indexOf('\n');
+    while (index > -1) {
+      var line = remaining.substring(0, index);
+      remaining = remaining.substring(index + 1);
+      func(line);
+      index = remaining.indexOf('\n');
+  }
+
+  });
+
+  input.on('end', function() {
+    if (remaining.length > 0) {
+      func(remaining);
+    }
+    if(!isEmpty(oneInv)){
+				
+				var a = [];
+				for (x in oneInv){
+					a.push(oneInv[x]);
+				}
+				conf.rows.push(a);
+				console.log(conf.rows);
+
+			}
+ 	 		var result = nodeExcel.execute(conf);
+
+			
+			fs.writeFile(filename.substring(0,filename.lastIndexOf('.'))+'.xlsx',result,'binary',function(err){
+			if(err) throw err;
+			console.log('complete');
+			});
+  });
+}
+
+
+
 
 function parserLine(line){
 	line = trim(line);
@@ -67,40 +108,42 @@ function parserLine(line){
 
 }
 var count = 0;
-function readfile(name){
-	lineReader.eachLine(name, function(line, last) {
 
-		 console.log(line);
-		// console.log(count++);
-  		parserLine(line);
-		// console.log(Object.getOwnPropertyNames(oneInv).length);
+
+// function readfile(name){
+// 	lineReader.eachLine(name, function(line, last) {
+
+// 		 console.log(line);
+// 		// console.log(count++);
+//   		parserLine(line);
+// 		// console.log(Object.getOwnPropertyNames(oneInv).length);
   		
   		
 		
- 	 	if (/* done */last) {
- 	 		if(!isEmpty(oneInv)){
+//  	 	if (/* done */last) {
+//  	 		if(!isEmpty(oneInv)){
 				
-				var a = [];
-				for (x in oneInv){
-					a.push(oneInv[x]);
-				}
-				conf.rows.push(a);
-				console.log(conf.rows);
+// 				var a = [];
+// 				for (x in oneInv){
+// 					a.push(oneInv[x]);
+// 				}
+// 				conf.rows.push(a);
+// 				console.log(conf.rows);
 
-			}
- 	 		var result = nodeExcel.execute(conf);
+// 			}
+//  	 		var result = nodeExcel.execute(conf);
 
-			var fs=require("fs");  
-			fs.writeFile('./1.xlsx',result,'binary',function(err){
-			if(err) throw err;
-			console.log('complete');
-			});
-   		 	return false; // stop reading
-  		}
-	});
-}
+// 			var fs=require("fs");  
+// 			fs.writeFile('./1.xlsx',result,'binary',function(err){
+// 			if(err) throw err;
+// 			console.log('complete');
+// 			});
+//    		 	return false; // stop reading
+//   		}
+// 	});
+// }
 
- readfile('a.txt');
+//  readfile('a.txt');
 
 // console.log(isEmpty(oneInv));
 // a = 'Times Cited: 840';
